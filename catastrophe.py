@@ -10,14 +10,13 @@ Technion, Haifa, Israel
 
 """
 
-
 import time
 
 
 def catastrophe():
     print("We are under Ransomware Attack !!!")
     print("Sending signal to C&C  ...")
-    #open socket + reboot
+    # open socket + reboot
     time.sleep(5)
     print("Reboot ...")
 

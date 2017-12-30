@@ -19,7 +19,7 @@ import subprocess
 import threading
 
 
-class myThread(threading.Thread):
+class thread(threading.Thread):
     def __init__(self, threadID, name):
         threading.Thread.__init__(self)
         self.threadID = threadID
@@ -57,8 +57,8 @@ def main():
     fh.close()
 
     # Create new watch-dogs
-    thread1 = myThread(1, "watch-dog#1")
-    thread2 = myThread(2, "watch-dog#1")
+    thread1 = thread(1, "watch-dog#1")
+    thread2 = thread(2, "watch-dog#2")
 
     # Start new watch-dogs
     thread1.start()
