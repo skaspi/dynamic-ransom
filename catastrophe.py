@@ -14,11 +14,12 @@ import time
 
 
 def catastrophe():
-    print("We are under Ransomware Attack !!!")
+    print("Ransomware detected !!!")
     print("Sending signal to C&C  ...")
+    print("Reboot in 3 seconds")
+
     # open socket + reboot
-    time.sleep(5)
-    print("Reboot ...")
+    time.sleep(3)
 
 
 def main():

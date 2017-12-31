@@ -8,5 +8,5 @@ setup(
     license='',
     author='dmotriy',
     author_email='',
-    description=''
+    description='', requires=['beautifulsoup4']
 )
