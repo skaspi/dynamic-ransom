@@ -36,7 +36,7 @@ class thread(threading.Thread):
 
 def aux_supervisor():
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='echo hui' "
+    arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='panic.exe' "
     location = os.environ['USERPROFILE'] + "\\Desktop\\"
     subprocess.call([shell, arguments + location])
 
@@ -51,8 +51,8 @@ def supervisor():
 def main():
     print("Watch-dog is getting started ...")
 
-    fh = open(os.environ['USERPROFILE'] + "\\Desktop\\counter.bak", "w+")
     shutil.copy("script.py", os.environ['USERPROFILE'] + "\\Desktop\\")
+    fh = open(os.environ['USERPROFILE'] + "\\Desktop\\counter.bak", "w+")
     fh.write("0")
     fh.close()
 

@@ -13,10 +13,16 @@ The threshold for Ransomware Attack is assigned to be 40 file modifications/dele
 """
 
 import os
+import subprocess
 import sys
 import time
 
-import catastrophe
+
+def panic():
+    shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='panic.exe' "
+    location = os.environ['USERPROFILE'] + "\\Desktop\\"
+    subprocess.call([shell, arguments + location])
 
 
 def aux_check(ans, value, mode):
@@ -71,7 +77,7 @@ def main():
     ans, value = open_file(-1, "r")
 
     if (not ans and value == -1) or value == 40:
-        catastrophe.catastrophe()
+        panic()
 
     while error_num < 3 and aux_check(ans, value, "r"):
         time.sleep(1)
@@ -83,7 +89,7 @@ def main():
         error_num = 0
 
     else:
-        catastrophe.catastrophe()
+        panic()
 
     ans, value = open_file(str(value), "w")
 
