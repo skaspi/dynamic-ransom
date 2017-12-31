@@ -76,6 +76,7 @@ def main():
 
     if (not ans and value == -1) or value >= 40:
         panic()
+        return
 
     while error_num < 3 and aux_check(ans, value, "r"):
         time.sleep(1)
@@ -88,6 +89,7 @@ def main():
 
     else:
         panic()
+        return
 
     ans, value = open_file(str(value), "w")
 
