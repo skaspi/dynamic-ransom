@@ -20,9 +20,8 @@ import time
 
 def panic():
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='panic.exe' "
-    location = os.environ['USERPROFILE'] + "\\Desktop\\"
-    subprocess.call([shell, arguments + location])
+    arguments = "C:\\WINDOWS\\system32\\panic\\panic.exe"
+    subprocess.call([shell, arguments])
 
 
 def aux_check(ans, value, mode):
@@ -44,7 +43,6 @@ def open_file(param, mode):
         fh = open(os.environ['USERPROFILE'] + "\\Desktop\\counter.bak", mode)
 
     except IOError as e:
-        print("I/O error({0}): {1}".format(e.errno, e.strerror))
         return False, -1
 
     try:
@@ -76,7 +74,7 @@ def main():
     error_num = 0
     ans, value = open_file(-1, "r")
 
-    if (not ans and value == -1) or value == 40:
+    if (not ans and value == -1) or value >= 40:
         panic()
 
     while error_num < 3 and aux_check(ans, value, "r"):

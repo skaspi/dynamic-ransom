@@ -36,7 +36,7 @@ class thread(threading.Thread):
 
 def aux_supervisor():
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='panic.exe' "
+    arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='C:\\WINDOWS\\system32\\panic\\panic.exe' "
     location = os.environ['USERPROFILE'] + "\\Desktop\\"
     subprocess.call([shell, arguments + location])
 
