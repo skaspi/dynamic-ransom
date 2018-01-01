@@ -42,7 +42,7 @@ def open_file(param, mode):
     try:
         fh = open(os.environ['USERPROFILE'] + "\\Desktop\\counter.bak", mode)
 
-    except IOError as e:
+    except IOError:
         return False, -1
 
     try:

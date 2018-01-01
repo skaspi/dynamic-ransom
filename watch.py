@@ -10,7 +10,7 @@ Technion, Haifa, Israel
 Script for watch-dog audition.The watch dog screens all the
 changes(deleting,modifying etc.) made to files with specified extensions.
 Each watch-dog screens its own directory.
-In our case we monitor C:\\ drive.
+In our case we monitor C drive.
 
 """
 import os
