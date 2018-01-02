@@ -13,9 +13,9 @@ The number of modifications is stored in dedicated .bak file.
 """
 
 import os
-import subprocess
 import sys
 import time
+import subprocess
 
 
 def panic():
