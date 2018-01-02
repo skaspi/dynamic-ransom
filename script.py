@@ -42,7 +42,7 @@ def main():
     except IOError:
         pass
 
-    print("Detected : {0} , is honeypot file ------> {1}" .format(sys.argv[1], flag == 1))
+    print("Detected : {0} , is honeypot file ------> {1}".format(sys.argv[1], flag == 1))
 
     if flag == 1:
         time.sleep(3)
