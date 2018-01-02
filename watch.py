@@ -52,9 +52,6 @@ def main():
     print("Watch-dog is getting started ...")
 
     shutil.copy("script.py", os.environ['USERPROFILE'] + "\\Desktop\\")
-    fh = open(os.environ['USERPROFILE'] + "\\Desktop\\counter.bak", "w+")
-    fh.write("0")
-    fh.close()
 
     # Create new watch-dogs
     thread1 = thread(1, "watch-dog#1")

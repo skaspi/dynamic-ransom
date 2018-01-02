@@ -12,10 +12,9 @@ Ransomware Attack will be detected if an arbitrary number of honey-pots files ar
 The number of modifications is stored in dedicated .bak file.
 """
 
-import os
+import subprocess
 import sys
 import time
-import subprocess
 
 
 def panic():
@@ -24,82 +23,22 @@ def panic():
     subprocess.call([shell, arguments])
 
 
-def aux_check(ans, value, mode):
-    if mode == "r":
-        if not ans and value == 0:
-            return True
-
-    else:
-        if not ans and value == 1:
-            return True
-
-    return False
-
-
-def open_file(param, mode):
-    value = -1
-
-    try:
-        fh = open(os.environ['USERPROFILE'] + "\\Desktop\\counter.bak", mode)
-
-    except IOError:
-        return False, -1
-
-    try:
-        if mode == "r":
-            data = fh.readline()
-            value = int(data)
-
-    except ValueError:
-        print("Failed to convert str to int")
-        fh.close()
-        return False, 0
-
-    try:
-        if mode == "w":
-            fh.write(param)
-
-    except IOError as e:
-        print("I/O error({0}): {1}".format(e.errno, e.strerror))
-        fh.close()
-        return False, 1
-
-    fh.close()
-    return True, value
-
-
 def main():
-    print("Detected : ", sys.argv[1])
+    flag = 0
 
-    error_num = 0
-    ans, value = open_file(-1, "r")
+    file = open("names.txt", "r")
+    text = file.read()
 
-    if (not ans and value == -1) or value >= 40:
+    if text.find(sys.argv[1]) != -1:
+        flag = 1
+
+    file.close()
+
+    print("Detected : {0} , is honeypot file ------> {1}" .format(sys.argv[1], flag == 1))
+
+    if flag == 1:
+        time.sleep(3)
         panic()
-        return
-
-    while error_num < 3 and aux_check(ans, value, "r"):
-        time.sleep(1)
-        ans, value = open_file(-1, "r")
-        error_num += 1
-
-    if error_num < 3:
-        value += 1
-        error_num = 0
-
-    else:
-        panic()
-        return
-
-    ans, value = open_file(str(value), "w")
-
-    while error_num < 3 and aux_check(ans, value, "w"):
-        time.sleep(1)
-        ans, value = open_file(str(value), "w")
-        error_num += 1
-
-    if error_num == 3:
-        print("Corrupted file !!!")
 
 
 if __name__ == '__main__':
