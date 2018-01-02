@@ -26,6 +26,8 @@ def panic():
 def main():
     flag = 0
 
+    filename = sys.argv[1].rsplit('\\', 1)[1]
+    print("file name is ", filename)
     file = open("names.txt", "r")
     text = file.read()
 
