@@ -12,6 +12,7 @@ Ransomware Attack will be detected if an arbitrary number of honey-pots files ar
 The number of modifications is stored in dedicated .bak file.
 """
 
+import re
 import subprocess
 import sys
 import time
@@ -27,11 +28,12 @@ def main():
     flag = 0
 
     filename = sys.argv[1].rsplit('\\', 1)[1]
-    print("file name is ", filename)
+
     file = open("names.txt", "r")
     text = file.read()
+    result = re.findall("\\b" + filename + "\\b", text)
 
-    if text.find(sys.argv[1]) != -1:
+    if result.__len__() != 0:
         flag = 1
 
     file.close()
