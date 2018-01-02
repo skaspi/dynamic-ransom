@@ -29,14 +29,18 @@ def main():
 
     filename = sys.argv[1].rsplit('\\', 1)[1]
 
-    file = open("names.txt", "r")
-    text = file.read()
-    result = re.findall("\\b" + filename + "\\b", text)
+    try:
+        file = open("names.txt", "r")
+        text = file.read()
+        result = re.findall("\\b" + filename + "\\b", text)
 
-    if result.__len__() != 0:
-        flag = 1
+        if result.__len__() != 0:
+            flag = 1
 
-    file.close()
+        file.close()
+
+    except IOError:
+        pass
 
     print("Detected : {0} , is honeypot file ------> {1}" .format(sys.argv[1], flag == 1))
 
