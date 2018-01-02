@@ -17,6 +17,7 @@ import sys
 import time
 import subprocess
 
+
 def panic():
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
     arguments = "C:\\WINDOWS\\system32\\panic\\panic.exe"
