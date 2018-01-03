@@ -41,8 +41,6 @@ def clean_up():
     except FileNotFoundError:
         pass
 
-    sys.exit(0)
-
 
 def exit_handler(signal, frame):
     """
