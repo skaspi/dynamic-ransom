@@ -12,6 +12,9 @@ changes(deleting,modifying etc.) made to files with specified extensions.
 Each watch-dog screens its own directory.
 In our case we monitor C drive.
 
+NOTE: The signal-handlers are playing important role:
+      before the program terminates we need to traverse through all the randomly-generated files
+      and clean them up.
 """
 import atexit
 import os
@@ -37,6 +40,8 @@ def clean_up():
 
     except FileNotFoundError:
         pass
+
+    sys.exit(0)
 
 
 def exit_handler(signal, frame):
