@@ -15,8 +15,21 @@ In our case we monitor C drive.
 """
 import os
 import shutil
+import signal
 import subprocess
+import sys
 import threading
+import time
+
+
+def sigint_handler(signal, frame):
+    sys.stdout.write('\nStopping threads... ')
+    sys.stdout.flush()
+    for worker in threads:
+        worker.stop()
+    time.sleep(1)
+    sys.stdout.write('Done\n')
+    sys.exit(0)
 
 
 class thread(threading.Thread):
@@ -51,11 +64,19 @@ def supervisor():
 def main():
     print("Watch-dog is getting started ...")
 
+    global threads
+    threads = []
+
+    signal.signal(signal.SIGINT, sigint_handler)
     shutil.copy("script.py", os.environ['USERPROFILE'] + "\\Desktop\\")
 
     # Create new watch-dogs
     thread1 = thread(1, "watch-dog#1")
     thread2 = thread(2, "watch-dog#2")
+
+    # Create new watch-dogs
+    threads.append(thread1)
+    threads.append(thread2)
 
     # Start new watch-dogs
     thread1.start()
