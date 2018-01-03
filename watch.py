@@ -32,6 +32,8 @@ def sigint_handler(signal, frame):
     for worker in threads:
         worker.stop()
 
+    os.remove(os.environ['USERPROFILE'] + "\\Desktop\\script.py")
+
     time.sleep(1)
     sys.stdout.write('Done\n')
     sys.stdout.flush()
