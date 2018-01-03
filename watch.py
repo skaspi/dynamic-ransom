@@ -26,7 +26,6 @@ import threading
 import time
 
 
-@atexit.register
 def clean_up():
     """
         The actual treads stopping + files clean-up
@@ -42,6 +41,7 @@ def clean_up():
         pass
 
 
+@atexit.register
 def exit_handler(signal, frame):
     """
         General shutdown signal handler
@@ -55,7 +55,6 @@ def exit_handler(signal, frame):
 
 
 class thread(threading.Thread):
-
     def __init__(self, threadID, name):
         threading.Thread.__init__(self)
         self.kill_received = False
@@ -106,7 +105,6 @@ def main():
     signal.signal(signal.SIGABRT, exit_handler)
 
     shutil.copy("script.py", os.environ['USERPROFILE'] + "\\Desktop\\")
-
 
     # Create new watch-dogs
     thread1 = thread(1, "watch-dog#1")
