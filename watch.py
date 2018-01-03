@@ -13,6 +13,7 @@ Each watch-dog screens its own directory.
 In our case we monitor C drive.
 
 """
+import atexit
 import os
 import shutil
 import signal
@@ -22,13 +23,11 @@ import threading
 import time
 
 
-def sigint_handler(signal, frame):
+@atexit.register
+def clean_up():
     """
-        Stopping threads gracefully ...)
+        The actual treads stopping + files clean-up
     """
-    sys.stdout.write('\nStopping threads...clean-up operations... ')
-    sys.stdout.flush()
-
     for worker in threads:
         worker.stop()
 
@@ -38,6 +37,14 @@ def sigint_handler(signal, frame):
     except FileNotFoundError:
         pass
 
+
+def sigint_handler(signal, frame):
+    """
+        INTSIG handler
+    """
+    sys.stdout.write('\nStopping threads...clean-up operations... ')
+    sys.stdout.flush()
+    clean_up()
     time.sleep(1)
     sys.stdout.write('Done\n')
     sys.stdout.flush()
@@ -47,6 +54,7 @@ class thread(threading.Thread):
     """
          Override some Thread methods
     """
+
     def __init__(self, threadID, name):
         threading.Thread.__init__(self)
         self.kill_received = False
@@ -70,9 +78,9 @@ def aux_supervisor():
          Watch after script.py  from ransom modification
     """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='C:\\WINDOWS\\system32\\panic\\panic.exe' "
+    arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='python C:\\WINDOWS\\system32\\panic\\panic.py' "
     location = os.environ['USERPROFILE'] + "\\Desktop\\"
-    subprocess.call([shell, arguments + location])
+    subprocess.run([shell, arguments + location])
 
 
 def supervisor():
@@ -92,7 +100,9 @@ def main():
     threads = []
 
     signal.signal(signal.SIGINT, sigint_handler)
+
     shutil.copy("script.py", os.environ['USERPROFILE'] + "\\Desktop\\")
+
 
     # Create new watch-dogs
     thread1 = thread(1, "watch-dog#1")

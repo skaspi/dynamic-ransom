@@ -12,21 +12,21 @@ the case of ransomware attack:
             ** e-mail ID
             ** 'infected file' message
 """
-
+import sys
 import time
 
 
 def catastrophe():
     """
-                Ransomware was detected --> send HTTP GET to C&C + stop machine
-                + clean-up operations
-
+            Ransomware was detected --> send HTTP GET to C&C + clean-up
+            + reboot
     """
     print("Ransomware detected !!!")
     print("Sending signal to C&C ...")
 
     print("Reboot in 3 seconds")
     time.sleep(3)
+    sys.exit(0)
 
 
 def main():
