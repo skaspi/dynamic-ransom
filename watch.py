@@ -26,7 +26,7 @@ def sigint_handler(signal, frame):
     """
         Stopping threads gracefully ...)
     """
-    sys.stdout.write('\nStopping threads... ')
+    sys.stdout.write('\nStopping threads...clean-up operations... ')
     sys.stdout.flush()
 
     for worker in threads:

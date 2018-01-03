@@ -24,7 +24,7 @@ def catastrophe():
 
     """
     print("Ransomware detected !!!")
-    print("Sending signal to C&C  ...")
+    print("Sending signal to C&C  + clean-up operations")
     print("Reboot in 3 seconds")
 
     # open socket + reboot
