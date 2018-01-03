@@ -72,7 +72,7 @@ def aux_supervisor():
 def supervisor():
     """
             Watch after honeypot files modification
-       """
+    """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
     arguments = "watchmedo shell-command --patterns='*.txt;*.pdf;*.xlsx' --recursive  --command='python "
     location = os.environ['USERPROFILE'] + "\\Desktop\\" + "script.py"
