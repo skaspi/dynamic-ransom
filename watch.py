@@ -25,8 +25,10 @@ import time
 def sigint_handler(signal, frame):
     sys.stdout.write('\nStopping threads... ')
     sys.stdout.flush()
+
     for worker in threads:
         worker.stop()
+
     time.sleep(1)
     sys.stdout.write('Done\n')
     sys.exit(0)
