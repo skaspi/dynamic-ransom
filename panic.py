@@ -16,8 +16,6 @@ the case of ransomware attack:
 import os
 import time
 
-import watch
-
 
 def catastrophe():
     """
@@ -27,9 +25,6 @@ def catastrophe():
     """
     print("Ransomware detected !!!")
     print("Sending signal to C&C  + clean-up operations")
-
-    for worker in watch.threads:
-        worker.stop()
 
     os.remove(os.environ['USERPROFILE'] + "\\Desktop\\script.py")
     print("Reboot in 3 seconds")
