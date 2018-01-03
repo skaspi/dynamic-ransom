@@ -57,9 +57,6 @@ def exit_handler(signal, frame):
 
 
 class thread(threading.Thread):
-    """
-         Override some Thread methods
-    """
 
     def __init__(self, threadID, name):
         threading.Thread.__init__(self)
