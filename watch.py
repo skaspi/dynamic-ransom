@@ -46,7 +46,7 @@ def clean_up():
 
 def exit_handler(signal, frame):
     """
-        SIGINT + SIGTERM handler
+        General shutdown signal handler
     """
     sys.stdout.write('\nStopping threads...clean-up files... ')
     sys.stdout.flush()
