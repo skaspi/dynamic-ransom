@@ -31,12 +31,13 @@ def sigint_handler(signal, frame):
 
     time.sleep(1)
     sys.stdout.write('Done\n')
-    sys.exit(0)
+    sys.stdout.flush()
 
 
 class thread(threading.Thread):
     def __init__(self, threadID, name):
         threading.Thread.__init__(self)
+        self.kill_received = False
         self.threadID = threadID
         self.name = name
 
@@ -47,6 +48,9 @@ class thread(threading.Thread):
             supervisor()
         else:
             aux_supervisor()
+
+    def stop(self):
+        self.kill_received = True
 
 
 def aux_supervisor():
@@ -83,7 +87,6 @@ def main():
     # Start new watch-dogs
     thread1.start()
     thread2.start()
-
 
 if __name__ == '__main__':
     main()
