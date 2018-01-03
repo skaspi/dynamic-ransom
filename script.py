@@ -19,6 +19,10 @@ import time
 
 
 def panic():
+    """
+            Ransomware was detected --> invoke the PANIC routine
+
+    """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
     arguments = "C:\\WINDOWS\\system32\\panic\\panic.exe"
     subprocess.call([shell, arguments])

@@ -23,6 +23,9 @@ import time
 
 
 def sigint_handler(signal, frame):
+    """
+        Stopping threads gracefully ...)
+    """
     sys.stdout.write('\nStopping threads... ')
     sys.stdout.flush()
 
@@ -35,6 +38,9 @@ def sigint_handler(signal, frame):
 
 
 class thread(threading.Thread):
+    """
+         Override some Thread methods
+    """
     def __init__(self, threadID, name):
         threading.Thread.__init__(self)
         self.kill_received = False
@@ -54,6 +60,9 @@ class thread(threading.Thread):
 
 
 def aux_supervisor():
+    """
+         Watch after script.py  from ransom modification
+    """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
     arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='C:\\WINDOWS\\system32\\panic\\panic.exe' "
     location = os.environ['USERPROFILE'] + "\\Desktop\\"
@@ -61,6 +70,9 @@ def aux_supervisor():
 
 
 def supervisor():
+    """
+            Watch after honeypot files modification
+       """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
     arguments = "watchmedo shell-command --patterns='*.txt;*.pdf;*.xlsx' --recursive  --command='python "
     location = os.environ['USERPROFILE'] + "\\Desktop\\" + "script.py"
@@ -80,7 +92,7 @@ def main():
     thread1 = thread(1, "watch-dog#1")
     thread2 = thread(2, "watch-dog#2")
 
-    # Create new watch-dogs
+    # Add threads to global list
     threads.append(thread1)
     threads.append(thread2)
 
