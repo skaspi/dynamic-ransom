@@ -32,7 +32,11 @@ def sigint_handler(signal, frame):
     for worker in threads:
         worker.stop()
 
-    os.remove(os.environ['USERPROFILE'] + "\\Desktop\\script.py")
+    try:
+        os.remove(os.environ['USERPROFILE'] + "\\Desktop\\script.py")
+
+    except FileNotFoundError:
+        pass
 
     time.sleep(1)
     sys.stdout.write('Done\n')

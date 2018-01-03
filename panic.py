@@ -13,7 +13,6 @@ the case of ransomware attack:
             ** 'infected file' message
 """
 
-import os
 import time
 
 
@@ -24,9 +23,8 @@ def catastrophe():
 
     """
     print("Ransomware detected !!!")
-    print("Sending signal to C&C  + clean-up operations")
+    print("Sending signal to C&C ...")
 
-    os.remove(os.environ['USERPROFILE'] + "\\Desktop\\script.py")
     print("Reboot in 3 seconds")
     time.sleep(3)
 
