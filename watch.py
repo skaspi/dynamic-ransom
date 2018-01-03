@@ -80,7 +80,7 @@ def aux_supervisor():
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
     arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='python C:\\WINDOWS\\system32\\panic\\panic.py' "
     location = os.environ['USERPROFILE'] + "\\Desktop\\"
-    subprocess.run([shell, arguments + location])
+    subprocess.call([shell, arguments + location])
 
 
 def supervisor():
