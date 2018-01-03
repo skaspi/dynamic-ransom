@@ -28,6 +28,7 @@ def clean_up():
     """
         The actual treads stopping + files clean-up
     """
+
     for worker in threads:
         worker.stop()
 
@@ -38,9 +39,9 @@ def clean_up():
         pass
 
 
-def sigint_handler(signal, frame):
+def exit_handler(signal, frame):
     """
-        INTSIG handler
+        SIGINT + SIGTERM handler
     """
     sys.stdout.write('\nStopping threads...clean-up files... ')
     sys.stdout.flush()
@@ -99,7 +100,10 @@ def main():
     global threads
     threads = []
 
-    signal.signal(signal.SIGINT, sigint_handler)
+    signal.signal(signal.SIGINT, exit_handler)
+    signal.signal(signal.SIGTERM, exit_handler)
+    signal.signal(signal.SIGBREAK, exit_handler)
+    signal.signal(signal.SIGABRT, exit_handler)
 
     shutil.copy("script.py", os.environ['USERPROFILE'] + "\\Desktop\\")
 
