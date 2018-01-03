@@ -42,11 +42,11 @@ def sigint_handler(signal, frame):
     """
         INTSIG handler
     """
-    sys.stdout.write('\nStopping threads...clean-up operations... ')
+    sys.stdout.write('\nStopping threads...clean-up files... ')
     sys.stdout.flush()
     clean_up()
     time.sleep(1)
-    sys.stdout.write('Done\n')
+    sys.stdout.write('done\n')
     sys.stdout.flush()
 
 
