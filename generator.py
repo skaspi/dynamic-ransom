@@ -35,7 +35,7 @@ def randomxls(path):
         workbook = xlsxwriter.Workbook(name)
         worksheet = workbook.add_worksheet()
 
-        numrows = (randint(10, 50))
+        numrows = 5
 
         for i in range(numrows):
             coord = 'A' + str(i)
@@ -67,7 +67,7 @@ def randompdf(path):
             [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".txt"
         fh = open(name1, "w+")
 
-        numwords = (randint(10, 20))
+        numwords = 5
 
         pdf = FPDF()
         pdf.add_page()

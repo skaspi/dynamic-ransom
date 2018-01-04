@@ -17,16 +17,13 @@ import re
 import sys
 import time
 
-import panic
-
 
 def panic():
     """
             Ransomware was detected --> send HTTP GET to C&C + clean-up
             + reboot
     """
-
-
+    print("panic!!!")
 
 
 def main():
