@@ -7,7 +7,7 @@ Created on Mon Jan 1 12:50:16 2018
 Ransomware Detection Project
 Technion, Haifa, Israel
 
-Auxiliary script for generating honepot-files with random names and content.
+Auxiliary script for generating honeypot files with random names and content.
 Currently, we generating *.txt, *.pdf, *.xlsx files.
 """
 
@@ -21,8 +21,10 @@ import xlsxwriter
 from fpdf import FPDF
 
 
-# .xls Files
 def randomxls(path):
+    """
+       Generate .xls files in 'path' directory
+    """
     numxls = (randint(10, 20))
 
     for i in range(10):
@@ -51,8 +53,10 @@ def randomxls(path):
             copyfile(name, dupli)
 
 
-# .pdf Files + .txt Files
 def randompdf(path):
+    """
+           Generate .pdf files + .txt files
+    """
     numpdf = (randint(15, 20))
 
     for i in range(10):
@@ -93,5 +97,12 @@ def randompdf(path):
             copyfile(name1, dupli1)
 
 
-randomxls(os.environ['USERPROFILE'] + "\\Desktop\\honey\\")
-randompdf(os.environ['USERPROFILE'] + "\\Desktop\\honey\\")
+def main():
+    path = os.environ['USERPROFILE'] + "\\Desktop\\honey\\"
+    randomxls(path)
+    randompdf(path)
+
+
+if __name__ == '__main__':
+    main()
+
