@@ -16,9 +16,9 @@ import os
 
 def main():
     names = []
-    rootdir = "."
+    rootdir = os.environ['USERPROFILE'] + "\\Desktop\\honey\\"
 
-    for dirName, fileList in os.walk(rootdir):
+    for dirName, dirlist, fileList in os.walk(rootdir):
         for fname in fileList:
             filename, file_extension = os.path.splitext(fname)
             names.append(filename + file_extension)

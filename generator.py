@@ -25,7 +25,7 @@ def randomxls(path):
     """
        Generate .xls files in 'path' directory
     """
-    numxls = (randint(10, 20))
+    numxls = 10
 
     for i in range(10):
 
@@ -57,7 +57,7 @@ def randompdf(path):
     """
            Generate .pdf files + .txt files
     """
-    numpdf = (randint(15, 20))
+    numpdf = 10
 
     for i in range(10):
 
@@ -98,7 +98,10 @@ def randompdf(path):
 
 
 def main():
+
     path = os.environ['USERPROFILE'] + "\\Desktop\\honey\\"
+
+    os.makedirs(path)
     randomxls(path)
     randompdf(path)
 

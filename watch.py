@@ -25,11 +25,22 @@ import sys
 import threading
 import time
 
+exited = 0
+threads = []
+
 
 def clean_up():
     """
         The actual treads stopping + files clean-up
     """
+    global exited
+    global threads
+
+    if exited == 1:
+        return
+
+    sys.stdout.write('\nStopping threads...clean-up files... ')
+    sys.stdout.flush()
 
     for worker in threads:
         worker.stop()
@@ -40,18 +51,17 @@ def clean_up():
     except FileNotFoundError:
         pass
 
+    sys.stdout.write('done\n')
+    sys.stdout.flush()
+    exited = 1
+    time.sleep(1)
 
-@atexit.register
+
 def exit_handler(signal, frame):
     """
         General shutdown signal handler
     """
-    sys.stdout.write('\nStopping threads...clean-up files... ')
-    sys.stdout.flush()
     clean_up()
-    time.sleep(1)
-    sys.stdout.write('done\n')
-    sys.stdout.flush()
 
 
 class thread(threading.Thread):
@@ -97,8 +107,8 @@ def main():
     print("Watch-dog is getting started ...")
 
     global threads
-    threads = []
 
+    atexit.register(clean_up)
     signal.signal(signal.SIGINT, exit_handler)
     signal.signal(signal.SIGTERM, exit_handler)
     signal.signal(signal.SIGBREAK, exit_handler)
@@ -114,9 +124,15 @@ def main():
     threads.append(thread1)
     threads.append(thread2)
 
+    print("Generating honeypot files ...")
+    generate()
+
+    print("Distribute honeypots to specific folders ...")
+    distribute()
+
     # Start new watch-dogs
-    thread1.start()
-    thread2.start()
+    for worker in threads:
+        worker.start()
 
 
 if __name__ == '__main__':
