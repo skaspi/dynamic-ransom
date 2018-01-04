@@ -139,7 +139,7 @@ def supervisor():
     """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
     arguments = "watchmedo shell-command --patterns='*.txt;*.pdf;*.xlsx' --recursive  --command='python "
-    location = "script.py"
+    location = "auditor.py"
     subprocess.call([shell, arguments + location + " ${watch_src_path}' C:\\"])
 
 
