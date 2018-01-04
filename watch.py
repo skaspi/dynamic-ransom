@@ -127,7 +127,7 @@ def distribute():
             if counter % 60 == 0:
                 indicator += 1
 
-    os.remove(os.environ['USERPROFILE'] + "\\Desktop\\honey\\")
+    #os.remove(os.environ['USERPROFILE'] + "\\Desktop\\honey\\")
 
 
 def aux_supervisor():
