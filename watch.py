@@ -116,11 +116,11 @@ def distribute():
     for dirName, dirlist, fileList in os.walk(rootdir):
         for fname in fileList:
             if indicator == 0:
-                shutil.move(fname, path)
+                shutil.move(rootdir + fname, path)
             elif indicator == 1:
-                shutil.move(fname, path_1)
+                shutil.move(rootdir + fname, path_1)
             else:
-                shutil.move(fname, path_2)
+                shutil.move(rootdir + fname, path_2)
 
             counter += 1
 
