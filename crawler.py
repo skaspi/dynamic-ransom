@@ -18,11 +18,10 @@ def main():
     names = []
     rootdir = "."
 
-    for dirName, subdirList, fileList in os.walk(rootdir):
+    for dirName, fileList in os.walk(rootdir):
         for fname in fileList:
             filename, file_extension = os.path.splitext(fname)
-            if file_extension == ".txt" or file_extension == ".pdf" or file_extension == ".xlsx":
-                names.append(filename + file_extension)
+            names.append(filename + file_extension)
 
     file = open("names.txt", "w+")
     for name in names:

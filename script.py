@@ -20,7 +20,7 @@ import time
 
 def panic():
     """
-            Ransomware was detected --> invoke the PANIC routine
+            Ransomware detected --> invoke the PANIC routine
 
     """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
@@ -36,12 +36,11 @@ def main():
     try:
         file = open("names.txt", "r")
         text = file.read()
+        file.close()
         result = re.findall("\\b" + filename + "\\b", text)
 
         if result.__len__() != 0:
             flag = 1
-
-        file.close()
 
     except IOError:
         pass
