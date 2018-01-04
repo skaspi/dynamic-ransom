@@ -83,6 +83,18 @@ class thread(threading.Thread):
         self.kill_received = True
 
 
+def generate():
+    """
+        Call the dedicated generator.py script
+    """
+
+
+def distribute():
+    """
+        Distribute honeypots to specified folders
+    """
+
+
 def aux_supervisor():
     """
          Watch after script.py  from ransom modification
@@ -127,7 +139,7 @@ def main():
     print("Generating honeypot files ...")
     generate()
 
-    print("Distribute honeypots to specific folders ...")
+    print("Distribute honeypots ...")
     distribute()
 
     # Start new watch-dogs
