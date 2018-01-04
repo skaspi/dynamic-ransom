@@ -25,8 +25,21 @@ import sys
 import threading
 import time
 
+
 exited = 0
 threads = []
+path = os.environ['USERPROFILE'] + "\\Ransom\\"
+path_1 = os.environ['USERPROFILE'] + "\\Documents\\Love\\"
+path_2 = "C:\\We\\"
+
+
+def remove_dir(directory):
+    """
+        Remove files within given directory
+    """
+    for dirName, dirlist, fileList in os.walk(directory):
+        for fname in fileList:
+                os.remove(directory + fname)
 
 
 def clean_up():
@@ -51,6 +64,9 @@ def clean_up():
     except FileNotFoundError:
         pass
 
+    remove_dir(path)
+    remove_dir(path_1)
+    remove_dir(path_2)
     sys.stdout.write('done\n')
     sys.stdout.flush()
     exited = 1
@@ -89,6 +105,7 @@ def clawler():
     """
     subprocess.Popen(["python", "crawler.py"], shell=True, stdout=subprocess.PIPE).communicate()[0]
 
+
 def generate():
     """
         Call the dedicated generator.py script
@@ -100,13 +117,15 @@ def distribute():
     """
         Distribute honeypots to specified folders
     """
-    path = os.environ['USERPROFILE'] + "\\Ransom\\"
-    path_1 = os.environ['USERPROFILE'] + "\\Documents\\Love\\"
-    path_2 = "C:\\We\\"
 
-    os.makedirs(path)
-    os.makedirs(path_1)
-    os.makedirs(path_2)
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    if not os.path.exists(path_1):
+        os.makedirs(path_1)
+
+    if not os.path.exists(path_2):
+        os.makedirs(path_2)
 
     counter = 0
     indicator = 0
@@ -116,18 +135,16 @@ def distribute():
     for dirName, dirlist, fileList in os.walk(rootdir):
         for fname in fileList:
             if indicator == 0:
-                shutil.move(rootdir + fname, path)
+                shutil.move(rootdir + fname, path + fname)
             elif indicator == 1:
-                shutil.move(rootdir + fname, path_1)
+                shutil.move(rootdir + fname, path_1 + fname)
             else:
-                shutil.move(rootdir + fname, path_2)
+                shutil.move(rootdir + fname, path_2 + fname)
 
             counter += 1
 
             if counter % 60 == 0:
                 indicator += 1
-
-    #os.remove(os.environ['USERPROFILE'] + "\\Desktop\\honey\\")
 
 
 def aux_supervisor():
@@ -142,7 +159,7 @@ def aux_supervisor():
 
 def supervisor():
     """
-            Watch after honeypot files modification
+        Watch after honeypot files modification
     """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
     arguments = "watchmedo shell-command --patterns='*.txt;*.pdf;*.xlsx' --recursive  --command='python "
