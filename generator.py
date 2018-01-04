@@ -25,7 +25,7 @@ def randomxls(path):
     """
        Generate .xls files in 'path' directory
     """
-    numxls = 10
+    numxls = 5
 
     for i in range(10):
 
@@ -57,7 +57,7 @@ def randompdf(path):
     """
            Generate .pdf files + .txt files
     """
-    numpdf = 10
+    numpdf = 5
 
     for i in range(10):
 

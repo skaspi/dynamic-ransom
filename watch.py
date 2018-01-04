@@ -83,16 +83,51 @@ class thread(threading.Thread):
         self.kill_received = True
 
 
+def clawler():
+    """
+        Extract the names of honeypots
+    """
+    subprocess.Popen(["python", "crawler.py"], shell=True, stdout=subprocess.PIPE).communicate()[0]
+
 def generate():
     """
         Call the dedicated generator.py script
     """
+    subprocess.Popen(["python", "generator.py"], shell=True, stdout=subprocess.PIPE).communicate()[0]
 
 
 def distribute():
     """
         Distribute honeypots to specified folders
     """
+    path = os.environ['USERPROFILE'] + "\\Ransom\\"
+    path_1 = os.environ['USERPROFILE'] + "\\Documents\\Love\\"
+    path_2 = "C:\\We\\"
+
+    os.makedirs(path)
+    os.makedirs(path_1)
+    os.makedirs(path_2)
+
+    counter = 0
+    indicator = 0
+
+    rootdir = os.environ['USERPROFILE'] + "\\Desktop\\honey\\"
+
+    for dirName, dirlist, fileList in os.walk(rootdir):
+        for fname in fileList:
+            if indicator == 0:
+                shutil.move(fname, path)
+            elif indicator == 1:
+                shutil.move(fname, path_1)
+            else:
+                shutil.move(fname, path_2)
+
+            counter += 1
+
+            if counter % 60 == 0:
+                indicator += 1
+
+    os.remove(os.environ['USERPROFILE'] + "\\Desktop\\honey\\")
 
 
 def aux_supervisor():
@@ -140,6 +175,7 @@ def main():
     generate()
 
     print("Distribute honeypots ...")
+    clawler()
     distribute()
 
     # Start new watch-dogs
