@@ -10,11 +10,6 @@ Technion, Haifa, Israel
 Script for watch-dog audition.The watch dog screens all the
 changes(deleting,modifying etc.) made to files with specified extensions.
 Each watch-dog screens its own directory.
-In our case we monitor C drive.
-
-NOTE: Signal-handlers are crucial in our program:
-      before the program terminates we need to traverse through all the randomly-generated files
-      and clean them up, otherwise we will trash the system.
 """
 import atexit
 import os

@@ -14,7 +14,6 @@ The number of modifications is stored in dedicated .bak file.
 
 import os
 import re
-import subprocess
 import sys
 import time
 
@@ -23,9 +22,11 @@ import panic
 
 def panic():
     """
-            Ransomware detected --> invoke the PANIC routine
+            Ransomware was detected --> send HTTP GET to C&C + clean-up
+            + reboot
     """
-    subprocess.Popen(["python", "panic.py"], shell=True, stdout=subprocess.PIPE).communicate()[0]
+
+
 
 
 def main():
