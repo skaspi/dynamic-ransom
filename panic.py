@@ -12,25 +12,21 @@ the case of ransomware attack:
             ** e-mail ID
             ** 'infected file' message
 """
-import sys
 import time
 
 
-def catastrophe():
+def main():
     """
             Ransomware was detected --> send HTTP GET to C&C + clean-up
             + reboot
     """
     print("Ransomware detected !!!")
-    print("Sending signal to C&C ...")
+    print("Sending signal to C&C + cleaning the files...")
+
+    # subprocess.Popen(["python", "cleaner.py"], shell=True, stdout=subprocess.PIPE).communicate()[0]
 
     print("Reboot in 3 seconds")
-    time.sleep(3)
-    sys.exit(0)
-
-
-def main():
-    catastrophe()
+    time.sleep(1)
 
 
 if __name__ == '__main__':

@@ -12,26 +12,25 @@ Ransomware Attack will be detected if an arbitrary number of honey-pots files ar
 The number of modifications is stored in dedicated .bak file.
 """
 
+import os
 import re
 import subprocess
 import sys
 import time
 
+import panic
+
 
 def panic():
     """
             Ransomware detected --> invoke the PANIC routine
-
     """
-    shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    arguments = "python C:\\WINDOWS\\system32\\panic\\panic.py"
-    subprocess.call([shell, arguments])
+    subprocess.Popen(["python", "panic.py"], shell=True, stdout=subprocess.PIPE).communicate()[0]
 
 
 def main():
     flag = 0
-
-    filename = sys.argv[1].rsplit('\\', 1)[1]
+    filename = os.path.basename(sys.argv[1])
 
     try:
         file = open("names.txt", "r")
@@ -48,7 +47,7 @@ def main():
     print("Detected : {0} , is honeypot file ------> {1}".format(sys.argv[1], flag == 1))
 
     if flag == 1:
-        time.sleep(3)
+        time.sleep(1)
         panic()
 
 

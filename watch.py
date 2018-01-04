@@ -12,9 +12,9 @@ changes(deleting,modifying etc.) made to files with specified extensions.
 Each watch-dog screens its own directory.
 In our case we monitor C drive.
 
-NOTE: The signal-handlers are playing important role:
+NOTE: Signal-handlers are crucial in our program:
       before the program terminates we need to traverse through all the randomly-generated files
-      and clean them up.
+      and clean them up, otherwise we will trash the system.
 """
 import atexit
 import os
@@ -25,21 +25,10 @@ import sys
 import threading
 import time
 
-
 exited = 0
+
+global threads
 threads = []
-path = os.environ['USERPROFILE'] + "\\Ransom\\"
-path_1 = os.environ['USERPROFILE'] + "\\Documents\\Love\\"
-path_2 = "C:\\We\\"
-
-
-def remove_dir(directory):
-    """
-        Remove files within given directory
-    """
-    for dirName, dirlist, fileList in os.walk(directory):
-        for fname in fileList:
-                os.remove(directory + fname)
 
 
 def clean_up():
@@ -58,15 +47,8 @@ def clean_up():
     for worker in threads:
         worker.stop()
 
-    try:
-        os.remove(os.environ['USERPROFILE'] + "\\Desktop\\script.py")
+    cleaner()
 
-    except FileNotFoundError:
-        pass
-
-    remove_dir(path)
-    remove_dir(path_1)
-    remove_dir(path_2)
     sys.stdout.write('done\n')
     sys.stdout.flush()
     exited = 1
@@ -92,16 +74,21 @@ class thread(threading.Thread):
 
         if self.threadID == 1:
             supervisor()
-        else:
-            aux_supervisor()
 
     def stop(self):
         self.kill_received = True
 
 
-def clawler():
+def cleaner():
     """
-        Extract the names of honeypots
+        Call the dedicated cleaner.py script
+    """
+    subprocess.Popen(["python", "cleaner.py"], shell=True, stdout=subprocess.PIPE).communicate()[0]
+
+
+def crawler():
+    """
+        Extract the names of honeypots with dedicated crawler script
     """
     subprocess.Popen(["python", "crawler.py"], shell=True, stdout=subprocess.PIPE).communicate()[0]
 
@@ -117,6 +104,10 @@ def distribute():
     """
         Distribute honeypots to specified folders
     """
+
+    path = os.environ['USERPROFILE'] + "\\Ransom\\"
+    path_1 = os.environ['USERPROFILE'] + "\\Documents\\Love\\"
+    path_2 = "C:\\We\\"
 
     if not os.path.exists(path):
         os.makedirs(path)
@@ -147,23 +138,13 @@ def distribute():
                 indicator += 1
 
 
-def aux_supervisor():
-    """
-         Watch after script.py  from ransom modification
-    """
-    shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='python C:\\WINDOWS\\system32\\panic\\panic.py' "
-    location = os.environ['USERPROFILE'] + "\\Desktop\\"
-    subprocess.call([shell, arguments + location])
-
-
 def supervisor():
     """
         Watch after honeypot files modification
     """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
     arguments = "watchmedo shell-command --patterns='*.txt;*.pdf;*.xlsx' --recursive  --command='python "
-    location = os.environ['USERPROFILE'] + "\\Desktop\\" + "script.py"
+    location = "script.py"
     subprocess.call([shell, arguments + location + " ${watch_src_path}' C:\\"])
 
 
@@ -173,26 +154,22 @@ def main():
     global threads
 
     atexit.register(clean_up)
-    signal.signal(signal.SIGINT, exit_handler)
-    signal.signal(signal.SIGTERM, exit_handler)
-    signal.signal(signal.SIGBREAK, exit_handler)
-    signal.signal(signal.SIGABRT, exit_handler)
+    signals = [signal.SIGINT, signal.SIGTERM, signal.SIGBREAK, signal.SIGABRT]
 
-    shutil.copy("script.py", os.environ['USERPROFILE'] + "\\Desktop\\")
+    for sig in signals:
+        signal.signal(sig, exit_handler)
 
     # Create new watch-dogs
     thread1 = thread(1, "watch-dog#1")
-    thread2 = thread(2, "watch-dog#2")
 
     # Add threads to global list
     threads.append(thread1)
-    threads.append(thread2)
 
     print("Generating honeypot files ...")
     generate()
 
-    print("Distribute honeypots ...")
-    clawler()
+    print("Distributing honeypots ...")
+    crawler()
     distribute()
 
     # Start new watch-dogs
