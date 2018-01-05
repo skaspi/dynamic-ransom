@@ -7,30 +7,39 @@ Created on Thu Jan 04 18:52:16 2017
 Ransomware Detection Project
 Technion, Haifa, Israel
 
-Script for cleaning the honeypot files
+Script for cleaning the paths from honeypot files
 """
 
 import os
 
 
-def clean_dir(directory):
+def clean_dir(directory, names):
     """
         Remove honeypot files from given directory
     """
+
     for dirName, dirlist, fileList in os.walk(directory):
         for fname in fileList:
-            os.remove(directory + fname)
+            if fname in names:
+                os.remove(directory + fname)
 
 
 def main():
     """
             Collecting the paths and sending them for "clean-up"
     """
-    paths = ["C:\\", "C:\\Program Files\\", os.environ['USERPROFILE'] + "\\Pictures\\",
-             os.environ['USERPROFILE'] + "\\Documents\\", os.environ['USERPROFILE'] + "\\Desktop\\"]
+    paths = [os.environ['USERPROFILE'] + "\\Videos\\",
+             os.environ['USERPROFILE'] + "\\Music\\",
+             os.environ['USERPROFILE'] + "\\Pictures\\",
+             os.environ['USERPROFILE'] + "\\Documents\\",
+             os.environ['USERPROFILE'] + "\\Desktop\\"]
+
+    f = open('names.txt', 'r')
+    names = f.read().splitlines()
+    f.close()
 
     for path in paths:
-        clean_dir(path)
+        clean_dir(path, names)
 
 
 if __name__ == '__main__':

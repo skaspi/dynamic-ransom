@@ -101,8 +101,11 @@ def distribute():
         Distribute honeypots to specified folders
     """
 
-    paths = ["C:\\", "C:\\Program Files\\", os.environ['USERPROFILE'] + "\\Pictures\\",
-             os.environ['USERPROFILE'] + "\\Documents\\", os.environ['USERPROFILE'] + "\\Desktop\\"]
+    paths = [os.environ['USERPROFILE'] + "\\Videos\\",
+             os.environ['USERPROFILE'] + "\\Music\\",
+             os.environ['USERPROFILE'] + "\\Pictures\\",
+             os.environ['USERPROFILE'] + "\\Documents\\",
+             os.environ['USERPROFILE'] + "\\Desktop\\"]
 
     counter = 0
     indicator = 0
