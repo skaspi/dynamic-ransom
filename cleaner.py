@@ -13,9 +13,9 @@ Script for cleaning the honeypot files
 import os
 
 
-def remove_dir(directory):
+def clean_dir(directory):
     """
-        Remove files within given directory
+        Remove honeypot files from given directory
     """
     for dirName, dirlist, fileList in os.walk(directory):
         for fname in fileList:
@@ -23,13 +23,15 @@ def remove_dir(directory):
 
 
 def main():
-    path = os.environ['USERPROFILE'] + "\\Ransom\\"
-    path_1 = os.environ['USERPROFILE'] + "\\Documents\\Love\\"
-    path_2 = "C:\\We\\"
+    """
+            Collecting the paths and sending them for "clean-up"
+    """
+    paths = ["C:\\", "C:\\Program Files\\", os.environ['USERPROFILE'] + "\\Pictures\\",
+             os.environ['USERPROFILE'] + "\\Documents\\", os.environ['USERPROFILE'] + "\\Desktop\\"]
 
-    remove_dir(path)
-    remove_dir(path_1)
-    remove_dir(path_2)
+    for path in paths:
+        clean_dir(path)
+
 
 
 if __name__ == '__main__':

@@ -100,18 +100,11 @@ def distribute():
         Distribute honeypots to specified folders
     """
 
-    path = os.environ['USERPROFILE'] + "\\Ransom\\"
-    path_1 = os.environ['USERPROFILE'] + "\\Documents\\Love\\"
-    path_2 = "C:\\We\\"
-
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-    if not os.path.exists(path_1):
-        os.makedirs(path_1)
-
-    if not os.path.exists(path_2):
-        os.makedirs(path_2)
+    path = "C:\\"
+    path_1 = "C:\\Program Files\\"
+    path_2 = os.environ['USERPROFILE'] + "\\Pictures\\"
+    path_3 = os.environ['USERPROFILE'] + "\\Documents\\"
+    path_4 = os.environ['USERPROFILE'] + "\\Desktop\\"
 
     counter = 0
     indicator = 0
@@ -124,12 +117,16 @@ def distribute():
                 shutil.move(rootdir + fname, path + fname)
             elif indicator == 1:
                 shutil.move(rootdir + fname, path_1 + fname)
-            else:
+            elif indicator == 2:
                 shutil.move(rootdir + fname, path_2 + fname)
+            elif indicator == 3:
+                shutil.move(rootdir + fname, path_3 + fname)
+            else:
+                shutil.move(rootdir + fname, path_4 + fname)
 
             counter += 1
 
-            if counter % 20 == 0:
+            if counter % 6 == 0:
                 indicator += 1
 
 
