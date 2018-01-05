@@ -129,7 +129,7 @@ def distribute():
 
             counter += 1
 
-            if counter % 40 == 0:
+            if counter % 20 == 0:
                 indicator += 1
 
 

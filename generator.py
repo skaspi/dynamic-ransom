@@ -26,7 +26,7 @@ def randomxls(path):
     """
     numxls = 5
 
-    for i in range(10):
+    for i in range(5):
 
         name = path + ''.join(
             [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".xlsx"
