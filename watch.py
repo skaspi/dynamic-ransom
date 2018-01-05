@@ -129,7 +129,7 @@ def distribute():
 
             counter += 1
 
-            if counter % 60 == 0:
+            if counter % 40 == 0:
                 indicator += 1
 
 
@@ -138,7 +138,7 @@ def supervisor():
         Watch after honeypot files modification
     """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    arguments = "watchmedo shell-command --patterns='*.txt;*.pdf;*.xlsx' --recursive  --command='python "
+    arguments = "watchmedo shell-command --patterns='*.txt;*.xlsx' --recursive  --command='python "
     location = "auditor.py"
     subprocess.call([shell, arguments + location + " ${watch_src_path}' C:\\"])
 

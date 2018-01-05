@@ -8,7 +8,7 @@ Ransomware Detection Project
 Technion, Haifa, Israel
 
 Auxiliary script for generating honeypot files with random names and content.
-Currently, we generating *.txt, *.pdf, *.xlsx files.
+Currently, we generating *.txt,*.xlsx files.
 """
 
 import os.path
@@ -18,7 +18,6 @@ from random import randint
 from shutil import copyfile
 
 import xlsxwriter
-from fpdf import FPDF
 
 
 def randomxls(path):
@@ -31,6 +30,9 @@ def randomxls(path):
 
         name = path + ''.join(
             [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".xlsx"
+        name1 = path + ''.join(
+            [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".txt"
+        fh = open(name1, "w+")
 
         workbook = xlsxwriter.Workbook(name)
         worksheet = workbook.add_worksheet()
@@ -41,55 +43,15 @@ def randomxls(path):
             coord = 'A' + str(i)
 
             textinrow = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))])
-
+            fh.write(textinrow + "\n")
             worksheet.write(coord, textinrow)
 
         workbook.close()
+        fh.close()
 
         for i in range(numxls):
             dupli = path + ''.join(
                 [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".xlsx"
-
-            copyfile(name, dupli)
-
-
-def randompdf(path):
-    """
-           Generate .pdf files + .txt files
-    """
-    numpdf = 5
-
-    for i in range(10):
-
-        name = path + ''.join(
-            [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".pdf"
-        name1 = path + ''.join(
-            [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".txt"
-        fh = open(name1, "w+")
-
-        numwords = 5
-
-        pdf = FPDF()
-        pdf.add_page()
-        pdf.set_font("Arial", size=12)
-
-        words = []
-
-        for i in range(numwords):
-            randomword = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))])
-            fh.write(randomword + "\n")
-            words.append(randomword)
-
-        fh.close()
-        wordsinstring = ''.join(words)
-
-        pdf.cell(200, 10, txt=wordsinstring, align="C")
-
-        pdf.output(name)
-
-        for i in range(numpdf):
-            dupli = path + ''.join(
-                [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".pdf"
             dupli1 = path + ''.join(
                 [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".txt"
 
@@ -98,16 +60,13 @@ def randompdf(path):
 
 
 def main():
-
     path = os.environ['USERPROFILE'] + "\\Desktop\\honey\\"
 
     if not os.path.exists(path):
         os.makedirs(path)
 
     randomxls(path)
-    randompdf(path)
 
 
 if __name__ == '__main__':
     main()
-
