@@ -33,6 +33,5 @@ def main():
         clean_dir(path)
 
 
-
 if __name__ == '__main__':
     main()

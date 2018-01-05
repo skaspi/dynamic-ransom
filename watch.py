@@ -11,6 +11,7 @@ Script for watch-dog audition.The watch dog screens all the
 changes(deleting,modifying etc.) made to files with specified extensions.
 Each watch-dog screens its own directory.
 """
+
 import atexit
 import os
 import shutil
@@ -100,11 +101,8 @@ def distribute():
         Distribute honeypots to specified folders
     """
 
-    path = "C:\\"
-    path_1 = "C:\\Program Files\\"
-    path_2 = os.environ['USERPROFILE'] + "\\Pictures\\"
-    path_3 = os.environ['USERPROFILE'] + "\\Documents\\"
-    path_4 = os.environ['USERPROFILE'] + "\\Desktop\\"
+    paths = ["C:\\", "C:\\Program Files\\", os.environ['USERPROFILE'] + "\\Pictures\\",
+             os.environ['USERPROFILE'] + "\\Documents\\", os.environ['USERPROFILE'] + "\\Desktop\\"]
 
     counter = 0
     indicator = 0
@@ -113,19 +111,8 @@ def distribute():
 
     for dirName, dirlist, fileList in os.walk(rootdir):
         for fname in fileList:
-            if indicator == 0:
-                shutil.move(rootdir + fname, path + fname)
-            elif indicator == 1:
-                shutil.move(rootdir + fname, path_1 + fname)
-            elif indicator == 2:
-                shutil.move(rootdir + fname, path_2 + fname)
-            elif indicator == 3:
-                shutil.move(rootdir + fname, path_3 + fname)
-            else:
-                shutil.move(rootdir + fname, path_4 + fname)
-
+            shutil.move(rootdir + fname, paths[indicator] + fname)
             counter += 1
-
             if counter % 6 == 0:
                 indicator += 1
 
