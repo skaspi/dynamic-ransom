@@ -14,16 +14,17 @@ Ransomware Attack will be detected if at least one of these files are modified.
 
 import os
 import re
+import signal
 import sys
 import time
 
 
 def panic():
     """
-            Ransomware was detected --> send HTTP GET to C&C + clean-up
-            + reboot
+            Ransomware was detected --> send HTTP POST to C&C + send SIGINT to parent
     """
-    print("panic!!!") #add HTTP request to C&C
+    print("Sending SIGINT to parent ...")
+    os.kill(os.getppid(), signal.CTRL_C_EVENT)
 
 
 def main():
