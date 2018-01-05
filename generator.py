@@ -50,13 +50,14 @@ def randomxls(path):
         fh.close()
 
         for i in range(numxls):
-            dupli = path + ''.join(
-                [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".xlsx"
-            dupli1 = path + ''.join(
-                [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".txt"
+            if i % 3 == 0:
+                dupli = path + ''.join(
+                    [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".xlsx"
+                dupli1 = path + ''.join(
+                    [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".txt"
 
-            copyfile(name, dupli)
-            copyfile(name1, dupli1)
+                copyfile(name, dupli)
+                copyfile(name1, dupli1)
 
 
 def main():
