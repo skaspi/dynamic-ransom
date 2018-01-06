@@ -159,6 +159,7 @@ def main():
 
     print("Distributing honeypots ...")
     crawler()
+    time.sleep(0.1)
     distribute()
 
     # Start new watch-dogs
