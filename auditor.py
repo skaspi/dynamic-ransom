@@ -16,7 +16,6 @@ import os
 import re
 import signal
 import sys
-import time
 
 
 def panic():
@@ -44,7 +43,6 @@ def main():
 
     if flag == 1:
         print("Detected honeypot modification : {0} ".format(sys.argv[1]))
-        time.sleep(0.5)
         panic()
 
 
