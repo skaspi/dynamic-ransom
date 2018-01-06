@@ -16,7 +16,6 @@ import os
 import re
 import signal
 import sys
-import time
 
 
 def panic():
@@ -46,7 +45,6 @@ def main():
     print("Detected : {0} , is honeypot file ------> {1}".format(sys.argv[1], flag == 1))
 
     if flag == 1:
-        time.sleep(1)
         panic()
 
 
