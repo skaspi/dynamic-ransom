@@ -22,7 +22,6 @@ def panic():
     """
             Ransomware was detected --> send HTTP POST to C&C + send SIGINT to parent
     """
-    print("Sending SIGINT to parent ...")
     os.kill(os.getppid(), signal.CTRL_C_EVENT)
 
 
@@ -43,7 +42,7 @@ def main():
         pass
 
     if flag == 1:
-        print("Detected honeypot file : {0} ".format(sys.argv[1]))
+        print("Detected honeypot modification : {0} ".format(sys.argv[1]))
         panic()
 
 
