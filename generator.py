@@ -37,12 +37,12 @@ def randomxls(path):
         workbook = xlsxwriter.Workbook(name)
         worksheet = workbook.add_worksheet()
 
-        numrows = 5
+        numrows = 100
 
         for i in range(numrows):
             coord = 'A' + str(i)
 
-            textinrow = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))])
+            textinrow = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 30))])
             fh.write(textinrow + "\n")
             worksheet.write(coord, textinrow)
 
