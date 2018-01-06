@@ -51,11 +51,18 @@ def clean_up():
     time.sleep(1)
 
 
-def exit_handler(signal, frame):
+def dummy(signal, frame):
+    """
+        Dummy signal handler fro preventing SIGINT occur more than once
+    """
+
+
+def exit_handler(sig, frame):
     """
         General shutdown signal handler
     """
     clean_up()
+    signal.signal(signal.SIGINT, dummy)
 
 
 class thread(threading.Thread):
