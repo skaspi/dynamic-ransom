@@ -132,8 +132,6 @@ def supervisor():
 
 
 def main():
-    print("Watch-dog is getting started ...")
-
     global threads
 
     atexit.register(clean_up)
@@ -148,12 +146,9 @@ def main():
     # Add threads to global list
     threads.append(thread1)
 
-    print("Generating honeypot files ...")
+    print("Generating and distributing honeypot files ...")
     generate()
-
-    print("Distributing honeypots ...")
     crawler()
-    time.sleep(0.1)
     distribute()
 
     # Start new watch-dogs
