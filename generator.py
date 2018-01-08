@@ -12,13 +12,16 @@ Currently, we generating *.txt,*.xlsx files.
 """
 
 import os.path
-import random
-import string
-import tkinter as tk
 from random import randint
-from shutil import copyfile
+from shutil import copyfile, SameFileError
 
 import xlsxwriter
+
+dictionary = ["work", "book", "network", "random", "honey", "file", "list", "subscription", "computer"
+                                                                                            "important", "spot",
+              "system", "log", "area", "shape", "song", "generator", "crawler",
+              "auditor", "screen", "monitor", "desk", "table", "keys", "security", "random", "tube",
+              "box", "picture", "language", "framework", "cable", "disc", "grades", "account", "salaries"]
 
 
 def randomxls(path):
@@ -29,49 +32,54 @@ def randomxls(path):
 
     for i in range(5):
 
-        name = path + ''.join(
-            [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".xlsx"
-        name1 = path + ''.join(
-            [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".txt"
+        rnd = randint(0, len(dictionary) - 1)
+        name = path + dictionary[rnd] + ".xlsx"
+        rnd = randint(0, len(dictionary) - 1)
+        name1 = path + dictionary[rnd] + ".txt"
         fh = open(name1, "w+")
 
         workbook = xlsxwriter.Workbook(name)
         worksheet = workbook.add_worksheet()
 
-        numrows = 10
+        numrows = 20
+        words = []
+
+        with open('dictionary.txt', 'r') as f:
+            for line in f:
+                for word in line.split():
+                    words.append(word)
+        f.close()
 
         for i in range(numrows):
             coord = 'A' + str(i)
-
-            textinrow = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 30))])
-            fh.write(textinrow + "\n")
-            worksheet.write(coord, textinrow)
+            rnd = randint(0, len(words) - 1)
+            textinrow = words[rnd]
+            rnd = randint(0, len(words) - 1)
+            textinrow_1 = words[rnd]
+            fh.write(textinrow + " " + textinrow_1 + "\n")
+            worksheet.write(coord, textinrow + " " + textinrow_1)
 
         workbook.close()
         fh.close()
 
         for i in range(numxls):
             if i != 0 and i % 4 == 0:
-                dupli = path + ''.join(
-                    [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".xlsx"
-                dupli1 = path + ''.join(
-                    [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".txt"
+                rnd = randint(0, len(dictionary) - 1)
+                duplicate = path + dictionary[rnd] + ".xlsx"
+                rnd = randint(0, len(dictionary) - 1)
+                duplicate1 = path + dictionary[rnd] + ".txt"
 
-                copyfile(name, dupli)
-                copyfile(name1, dupli1)
-
-
-def graphic():
-    root = tk.Tk()
-
-    w = tk.Label(root, text="Hello Tkinter!")
-    w.pack()
-
-    root.mainloop()
+                try:
+                    copyfile(name, duplicate)
+                except SameFileError:
+                    pass
+                try:
+                    copyfile(name1, duplicate1)
+                except SameFileError:
+                    pass
 
 
 def main():
-    graphic()
     path = os.environ['USERPROFILE'] + "\\Desktop\\honey\\"
 
     if not os.path.exists(path):
