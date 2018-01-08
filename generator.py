@@ -47,7 +47,7 @@ def randomxls(path):
         workbook = xlsxwriter.Workbook(name)
         worksheet = workbook.add_worksheet()
 
-        numrows = 20
+        numrows = 50
 
         for j in range(numrows):
             coord = 'A' + str(i)
