@@ -23,7 +23,7 @@ def main():
             filename, file_extension = os.path.splitext(fname)
             names.append(filename + file_extension)
 
-    file = open("names.txt", "w+")
+    file = open("names.txt", "a+")
     for name in names:
         file.write(name + "\n")
     file.close()

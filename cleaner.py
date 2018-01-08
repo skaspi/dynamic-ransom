@@ -28,10 +28,7 @@ def main():
     """
             Collecting the paths and sending them for "clean-up"
     """
-    paths = [os.environ['USERPROFILE'] + "\\Videos\\",
-             os.environ['USERPROFILE'] + "\\Music\\",
-             os.environ['USERPROFILE'] + "\\Pictures\\",
-             os.environ['USERPROFILE'] + "\\Documents\\",
+    paths = [os.environ['USERPROFILE'] + "\\Documents\\",
              os.environ['USERPROFILE'] + "\\Desktop\\"]
 
     f = open('names.txt', 'r')

@@ -102,10 +102,7 @@ def distribute():
         Distribute honeypots to specified folders
     """
 
-    paths = [os.environ['USERPROFILE'] + "\\Videos\\",
-             os.environ['USERPROFILE'] + "\\Music\\",
-             os.environ['USERPROFILE'] + "\\Pictures\\",
-             os.environ['USERPROFILE'] + "\\Documents\\",
+    paths = [os.environ['USERPROFILE'] + "\\Documents\\",
              os.environ['USERPROFILE'] + "\\Desktop\\"]
 
     counter = 0
@@ -117,7 +114,7 @@ def distribute():
         for fname in fileList:
             shutil.move(rootdir + fname, paths[indicator] + fname)
             counter += 1
-            if counter % 6 == 0:
+            if counter % 8 == 0:
                 indicator += 1
 
 

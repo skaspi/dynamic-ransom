@@ -13,13 +13,11 @@ Currently, we generating *.txt,*.xlsx files.
 
 import os.path
 from random import randint
-from shutil import copyfile, SameFileError
 
 import xlsxwriter
 
-dictionary = ["work", "book", "network", "random", "honey", "file", "list", "subscription", "computer"
-                                                                                            "important", "spot",
-              "system", "log", "area", "shape", "song", "generator", "crawler",
+dictionary = ["work", "book", "network", "random", "honey", "file", "list", "subscription", "computer",                                                                                            "important", "spot",
+              "system", "log", "area", "shape", "song", "generator", "crawler", "infection", "data"
               "auditor", "screen", "monitor", "desk", "table", "keys", "security", "random", "tube",
               "box", "picture", "language", "framework", "cable", "disc", "grades", "account", "salaries"]
 
@@ -28,29 +26,30 @@ def randomxls(path):
     """
        Generate .xls files in 'path' directory
     """
-    numxls = 5
+    num_of_files = 8
 
-    for i in range(5):
+    words = []
+    counter = 0
 
-        rnd = randint(0, len(dictionary) - 1)
-        name = path + dictionary[rnd] + ".xlsx"
-        rnd = randint(0, len(dictionary) - 1)
-        name1 = path + dictionary[rnd] + ".txt"
+    with open('dictionary.txt', 'r') as f:
+        for line in f:
+            for word in line.split():
+                words.append(word)
+    f.close()
+
+    for i in range(num_of_files):
+        name = path + dictionary[counter] + ".xlsx"
+        counter += 1
+        name1 = path + dictionary[counter] + ".txt"
+        counter += 1
         fh = open(name1, "w+")
 
         workbook = xlsxwriter.Workbook(name)
         worksheet = workbook.add_worksheet()
 
         numrows = 20
-        words = []
 
-        with open('dictionary.txt', 'r') as f:
-            for line in f:
-                for word in line.split():
-                    words.append(word)
-        f.close()
-
-        for i in range(numrows):
+        for j in range(numrows):
             coord = 'A' + str(i)
             rnd = randint(0, len(words) - 1)
             textinrow = words[rnd]
@@ -61,22 +60,6 @@ def randomxls(path):
 
         workbook.close()
         fh.close()
-
-        for i in range(numxls):
-            if i != 0 and i % 4 == 0:
-                rnd = randint(0, len(dictionary) - 1)
-                duplicate = path + dictionary[rnd] + ".xlsx"
-                rnd = randint(0, len(dictionary) - 1)
-                duplicate1 = path + dictionary[rnd] + ".txt"
-
-                try:
-                    copyfile(name, duplicate)
-                except SameFileError:
-                    pass
-                try:
-                    copyfile(name1, duplicate1)
-                except SameFileError:
-                    pass
 
 
 def main():
