@@ -14,6 +14,7 @@ Currently, we generating *.txt,*.xlsx files.
 import os.path
 import random
 import string
+import tkinter as tk
 from random import randint
 from shutil import copyfile
 
@@ -37,7 +38,7 @@ def randomxls(path):
         workbook = xlsxwriter.Workbook(name)
         worksheet = workbook.add_worksheet()
 
-        numrows = 100
+        numrows = 10
 
         for i in range(numrows):
             coord = 'A' + str(i)
@@ -50,7 +51,7 @@ def randomxls(path):
         fh.close()
 
         for i in range(numxls):
-            if i % 3 == 0:
+            if i != 0 and i % 4 == 0:
                 dupli = path + ''.join(
                     [random.choice(string.ascii_letters + string.digits) for n in range(randint(5, 15))]) + ".xlsx"
                 dupli1 = path + ''.join(
@@ -60,7 +61,17 @@ def randomxls(path):
                 copyfile(name1, dupli1)
 
 
+def graphic():
+    root = tk.Tk()
+
+    w = tk.Label(root, text="Hello Tkinter!")
+    w.pack()
+
+    root.mainloop()
+
+
 def main():
+    graphic()
     path = os.environ['USERPROFILE'] + "\\Desktop\\honey\\"
 
     if not os.path.exists(path):
