@@ -19,11 +19,13 @@ def crawl(directory):
      Record the names of files that exist in current dir
     """
     names = []
+    extensions = [".jpg",".mp3",".txt",".xlsx"]
 
     for dirName, dirlist, fileList in os.walk(directory):
         for fname in fileList:
             filename, file_extension = os.path.splitext(fname)
-            names.append(filename + file_extension)
+            if file_extension in extensions:
+                names.append(filename + file_extension)
 
     file = open("names.txt", "a+")
     for name in names:

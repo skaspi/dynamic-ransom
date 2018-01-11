@@ -13,7 +13,6 @@ Ransomware Attack will be detected if at least one of these files is modified.
 
 import os
 import re
-import signal
 import sys
 
 
@@ -21,7 +20,7 @@ def panic():
     """
             Ransomware was detected --> send HTTP POST to C&C + kill VM instance
     """
-    os.kill(os.getppid(), signal.CTRL_C_EVENT)
+    #os.kill(os.getppid(), signal.CTRL_C_EVENT)
 
 
 def main():
