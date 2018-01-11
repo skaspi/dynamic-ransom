@@ -14,11 +14,13 @@ saving their names.
 import os
 
 
-def main():
+def crawl(directory):
+    """
+     Record the names of files that exist in current dir
+    """
     names = []
-    rootdir = os.environ['USERPROFILE'] + "\\Desktop\\honey\\"
 
-    for dirName, dirlist, fileList in os.walk(rootdir):
+    for dirName, dirlist, fileList in os.walk(directory):
         for fname in fileList:
             filename, file_extension = os.path.splitext(fname)
             names.append(filename + file_extension)
@@ -27,6 +29,13 @@ def main():
     for name in names:
         file.write(name + "\n")
     file.close()
+
+
+def main():
+    crawl(os.environ['USERPROFILE'] + "\\Desktop\\honey\\")
+    crawl(os.environ['USERPROFILE'] + "\\Pictures\\")
+    crawl(os.environ['USERPROFILE'] + "\\Music\\")
+    crawl(os.environ['USERPROFILE'] + "\\Videos\\")
 
 
 if __name__ == '__main__':

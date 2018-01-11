@@ -8,8 +8,7 @@ Ransomware Detection Project
 Technion, Haifa, Israel
 
 Auxiliary script for monitoring the honeypot files.
-Ransomware Attack will be detected if at least one of these files are modified.
-
+Ransomware Attack will be detected if at least one of these files is modified.
 """
 
 import os
@@ -20,7 +19,7 @@ import sys
 
 def panic():
     """
-            Ransomware was detected --> send HTTP POST to C&C + send SIGINT to parent
+            Ransomware was detected --> send HTTP POST to C&C + kill VM instance
     """
     os.kill(os.getppid(), signal.CTRL_C_EVENT)
 

@@ -38,6 +38,8 @@ def main():
     for path in paths:
         clean_dir(path, names)
 
+    os.remove(os.getcwd() + "\\names.txt")
+
 
 if __name__ == '__main__':
     main()
