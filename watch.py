@@ -41,7 +41,10 @@ def clean_up():
     sys.stdout.flush()
 
     for worker in threads:
-        worker.stop()
+        if type(worker) != threading.Timer:
+            worker.stop()
+        else:
+            worker.cancel()
 
     cleaner()
 
@@ -74,6 +77,13 @@ class thread(threading.Thread):
 
     def stop(self):
         self.kill_received = True
+
+
+def shutdown():
+    """
+    Terminate the current instance of VM
+    """
+    print("HERE")
 
 
 def cleaner():
@@ -139,9 +149,11 @@ def main():
 
     # Create new watch-dogs
     thread1 = thread(1, "watch-dog#1")
+    thread2 = threading.Timer(60.0, shutdown)
 
     # Add threads to global list
     threads.append(thread1)
+    threads.append(thread2)
 
     print("Generating and distributing honeypot files ...")
     generate()
