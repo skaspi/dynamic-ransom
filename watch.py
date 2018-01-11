@@ -123,7 +123,7 @@ def supervisor():
         Watch after honeypot files modification
     """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    arguments = "watchmedo shell-command --patterns='*.txt;*.xlsx' --recursive  --command='python "
+    arguments = "watchmedo shell-command --patterns='*.txt;*.xlsx;*.jpg;*.mp3' --recursive  --command='python "
     location = "auditor.py"
     subprocess.call([shell, arguments + location + " ${watch_src_path}' C:\\"])
 
