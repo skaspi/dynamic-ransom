@@ -83,7 +83,7 @@ def shutdown():
     """
     Terminate the current instance of VM
     """
-    print("HERE")
+    #TODO: C&C signal
 
 
 def cleaner():

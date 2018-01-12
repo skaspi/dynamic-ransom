@@ -39,6 +39,7 @@ def main():
         clean_dir(path, names)
 
     os.remove(os.getcwd() + "\\names.txt")
+    os.remove(os.getcwd() + "\\communicate.txt")
 
 
 if __name__ == '__main__':
