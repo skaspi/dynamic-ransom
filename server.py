@@ -7,10 +7,10 @@ Created on Sat Jan 13 22:45:16 2017
 Ransomware Detection Project
 Technion, Haifa, Israel
 
-Server that handle socket C&C inbound connections with threads
+Server that handle multiple C&C inbound connections with threads
 Each request contains a list of suspicious links, which will be analyzed
 by our Sand-Box mechanism.
-A huge respect goes to Silver Moon and his post from the following link:
+A huge credit goes to Silver Moon and his post from the following link:
 http://www.binarytides.com/python-socket-server-code-example/
 We really appreciate it :))
 """
