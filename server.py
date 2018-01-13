@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Created on Wed Dec 27 21:12:16 2017
+Created on Sat Jan 13 22:45:16 2017
 
 @authors Rafael,Dmitriy
 Ransomware Detection Project
 Technion, Haifa, Israel
 
-
+It is our server that listening to the C&C inbound requests.
+Each request contains a list of suspicious links, which will be analyzed
+by our Sand-Box mechanism.
 """
 import socket
 
