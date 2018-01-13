@@ -13,7 +13,6 @@ import socket
 
 
 def main():
-
     HOST = 'localhost'  # Symbolic name meaning all available interfaces
     PORT = 8080  # Arbitrary non-privileged port
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
