@@ -25,7 +25,7 @@ def main():
             while True:
                 data = conn.recv(1024)
                 if not data: break
-                print(data)
+                print(repr(data))
                 conn.sendall(data)
 
 
