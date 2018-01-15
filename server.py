@@ -73,6 +73,7 @@ def url_download(url):
     zip_ref = zipfile.ZipFile(os.getcwd() + "\\" + folder + "\\" + dir + "\\" + filename, 'r')
     zip_ref.extractall(os.getcwd() + "\\" + folder + "\\" + dir + "\\")
     zip_ref.close()
+    os.remove(os.getcwd() + "\\" + folder + "\\" + dir + "\\" + filename)
 
 
 def get_filename_from_cd(cd):
