@@ -56,7 +56,7 @@ def url_download(url):
         filename = url.rsplit('/', 1)[1]
 
     dir = filename.rsplit('.', 1)[0]
-    os.chdir(str(connection))
+    os.chdir(folder)
 
     try:
         os.makedirs(dir)
@@ -65,7 +65,7 @@ def url_download(url):
 
     os.chdir("..")
 
-    with urlopen(url) as response, open(os.getcwd() + "\\" + str(connection) + "\\" + dir + "\\" + filename, 'wb') as out_file:
+    with urlopen(url) as response, open(os.getcwd() + "\\" + folder + "\\" + dir + "\\" + filename, 'wb') as out_file:
         shutil.copyfileobj(response, out_file)
         out_file.close()
 
