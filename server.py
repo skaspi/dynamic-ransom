@@ -34,7 +34,6 @@ class thread(threading.Thread):
         self.name = name
 
     def run(self):
-        print("Started: " + self.name)
         url_download(self.name)
 
 
@@ -56,7 +55,17 @@ def url_download(url):
     else:
         filename = url.rsplit('/', 1)[1]
 
-    with urlopen(url) as response, open(os.getcwd() + "\\" + str(connection) + "\\" + filename, 'wb') as out_file:
+    dir = filename.rsplit('.', 1)[0]
+    os.chdir(str(connection))
+
+    try:
+        os.makedirs(dir)
+    except FileExistsError:
+        pass
+
+    os.chdir("..")
+
+    with urlopen(url) as response, open(os.getcwd() + "\\" + str(connection) + "\\" + dir + "\\" + filename, 'wb') as out_file:
         shutil.copyfileobj(response, out_file)
         out_file.close()
 
