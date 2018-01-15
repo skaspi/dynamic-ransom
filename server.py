@@ -24,7 +24,6 @@ from urllib.request import urlopen
 
 import requests
 
-links = []
 connection = 0
 
 
@@ -36,16 +35,13 @@ class thread(threading.Thread):
 
     def run(self):
         print("Started: " + self.name)
-        url_download(self.threadID)
+        url_download(self.name)
 
 
-def url_download(i):
+def url_download(url):
     """
      Download single file from given url
     """
-    global links
-    url = links[i]
-
     if not os.path.exists(str(connection)):
         try:
             os.makedirs(str(connection))
@@ -81,14 +77,13 @@ def handle_links(raw_data):
     """
      Routine for handling the received downloadable links
     """
-    global links
     raw_data = raw_data.decode('ASCII')
     raw_data = json.loads(raw_data)
     threads = []
+
     for i in range(len(raw_data)):
-        thread_ = thread(i, "worker #" + str(i))
+        thread_ = thread(i, raw_data[i])
         threads.append(thread_)
-        links.append(raw_data[i])
 
     for worker in threads:
         worker.start()
