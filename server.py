@@ -77,15 +77,17 @@ def url_download(url):
 
     os.chdir("..")
 
-    with urlopen(url) as response, open(os.getcwd() + "\\" + folder + "\\" + dir + "\\" + filename, 'wb') as out_file:
+    path = os.getcwd() + "\\" + folder + "\\" + dir + "\\"
+
+    with urlopen(url) as response, open(path + filename, 'wb') as out_file:
         shutil.copyfileobj(response, out_file)
         out_file.close()
 
-    zip_ref = zipfile.ZipFile(os.getcwd() + "\\" + folder + "\\" + dir + "\\" + filename, 'r')
-    zip_ref.extractall(os.getcwd() + "\\" + folder + "\\" + dir + "\\")
+    zip_ref = zipfile.ZipFile(path + filename, 'r')
+    zip_ref.extractall(path)
     zip_ref.close()
-    os.remove(os.getcwd() + "\\" + folder + "\\" + dir + "\\" + filename)
-    remove_redundant(os.getcwd() + "\\" + folder + "\\" + dir + "\\")
+    os.remove(path + filename)
+    remove_redundant(path)
 
 
 def get_filename_from_cd(cd):
