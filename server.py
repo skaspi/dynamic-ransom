@@ -20,6 +20,7 @@ import shutil
 import socket
 import sys
 import threading
+import zipfile
 from urllib.request import urlopen
 
 import requests
@@ -68,6 +69,10 @@ def url_download(url):
     with urlopen(url) as response, open(os.getcwd() + "\\" + folder + "\\" + dir + "\\" + filename, 'wb') as out_file:
         shutil.copyfileobj(response, out_file)
         out_file.close()
+
+    zip_ref = zipfile.ZipFile(os.getcwd() + "\\" + folder + "\\" + dir + "\\" + filename, 'r')
+    zip_ref.extractall(os.getcwd() + "\\" + folder + "\\" + dir + "\\")
+    zip_ref.close()
 
 
 def get_filename_from_cd(cd):
