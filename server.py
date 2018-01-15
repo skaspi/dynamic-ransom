@@ -117,6 +117,14 @@ def handle_links(raw_data):
     for worker in threads:
         worker.start()
 
+    for worker in threads:
+        worker.join()
+
+    src = os.getcwd() + "\\" + str(connection) + "\\"
+    dst = os.environ['USERPROFILE'] + "\\Desktop\\" + str(connection)
+
+    shutil.move(src, dst)
+
 
 def client_thread(conn):
     """
