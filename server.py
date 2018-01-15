@@ -38,6 +38,17 @@ class thread(threading.Thread):
         url_download(self.name)
 
 
+def remove_redundant(root):
+    """
+     Remove redundant files from current user directory
+    """
+    for dirName, dirlist, fileList in os.walk(root):
+        for fname in fileList:
+            filename, file_extension = os.path.splitext(fname)
+            if file_extension != ".exe":
+                os.remove(root + filename + file_extension)
+
+
 def url_download(url):
     """
      Download single file from given url
@@ -74,6 +85,7 @@ def url_download(url):
     zip_ref.extractall(os.getcwd() + "\\" + folder + "\\" + dir + "\\")
     zip_ref.close()
     os.remove(os.getcwd() + "\\" + folder + "\\" + dir + "\\" + filename)
+    remove_redundant(os.getcwd() + "\\" + folder + "\\" + dir + "\\")
 
 
 def get_filename_from_cd(cd):
