@@ -131,7 +131,7 @@ def client_thread(conn):
     Function for handling connections. This will be used to create threads
     """
     while True:
-        data = conn.recv(1024)
+        data = conn.recv(2048)
 
         if not data:
             break
