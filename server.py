@@ -60,11 +60,9 @@ def url_download(i):
     else:
         filename = url.rsplit('/', 1)[1]
 
-    with urlopen(url) as response, open(filename, 'wb') as out_file:
+    with urlopen(url) as response, open(os.getcwd() + "\\" + str(connection) + "\\" + filename, 'wb') as out_file:
         shutil.copyfileobj(response, out_file)
         out_file.close()
-        file_name = out_file.__str__()
-        shutil.move(os.getcwd() + "\\" + filename, os.getcwd() + "\\" + str(connection) + "\\" + filename)
 
 
 def get_filename_from_cd(cd):
