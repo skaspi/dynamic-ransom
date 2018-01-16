@@ -38,6 +38,15 @@ class thread(threading.Thread):
         url_download(self.name)
 
 
+def launch(root):
+    """
+     Launch the user's .exe files
+    """
+    for root, dirs, files in os.walk(root, topdown=False):
+        for name in files:
+            print(os.path.join(root, name))
+
+
 def remove_redundant(root):
     """
      Remove redundant files from current user directory
@@ -124,6 +133,7 @@ def handle_links(raw_data):
     dst = os.environ['USERPROFILE'] + "\\Desktop\\" + str(connection)
 
     shutil.move(src, dst)
+    launch(dst)
 
 
 def client_thread(conn):
