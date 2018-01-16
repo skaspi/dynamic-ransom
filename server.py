@@ -42,10 +42,12 @@ class thread(threading.Thread):
 
 def launch(root):
     """
-     Launch the user's .exe files
+     Launch the Watch-Dog and the user's .exe files
     """
 
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
+
+    subprocess.call([shell, "C:\\Windows\\System32\\watch\\watch.exe"])
 
     for root, dirs, files in os.walk(root, topdown=False):
         for name in files:
