@@ -18,8 +18,10 @@ import os
 import re
 import shutil
 import socket
+import subprocess
 import sys
 import threading
+import time
 import zipfile
 from urllib.request import urlopen
 
@@ -42,9 +44,14 @@ def launch(root):
     """
      Launch the user's .exe files
     """
+
+    shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
+
     for root, dirs, files in os.walk(root, topdown=False):
         for name in files:
-            print(os.path.join(root, name))
+            argument = os.path.join(root, name)
+            time.sleep(0.5)
+            subprocess.call([shell, argument])
 
 
 def remove_redundant(root):
