@@ -102,7 +102,18 @@ def url_download(url):
         out_file.close()
 
     zip_ref = zipfile.ZipFile(path + filename, 'r')
-    zip_ref.extractall(path)
+    encrypt = 0
+
+    try:
+        zip_ref.testzip()
+    except RuntimeError as e:
+        if 'encrypted' in str(e):
+            zip_ref.extractall(path, pwd='dg')
+            encrypt = 1
+
+    if encrypt == 0:
+        zip_ref.extractall(path)
+
     zip_ref.close()
     os.remove(path + filename)
     remove_redundant(path)
