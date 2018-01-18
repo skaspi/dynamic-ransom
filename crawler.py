@@ -19,7 +19,7 @@ def crawl(directory):
      Record the names of files that exist in current dir
     """
     names = []
-    extensions = [".jpg", ".mp3", ".txt", ".xlsx"]
+    extensions = [".jpg", ".mp3", ".txt", ".xlsx", ".mp4"]
 
     for dirName, dirlist, fileList in os.walk(directory):
         for fname in fileList:
