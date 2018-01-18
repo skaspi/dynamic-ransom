@@ -58,6 +58,8 @@ def launch(root):
 
     p = multiprocessing.Process(target=watch_dog_run)
     p.start()
+    
+    time.sleep(1)
 
     for root, dirs, files in os.walk(root, topdown=False):
         for name in files:

@@ -81,9 +81,9 @@ class thread(threading.Thread):
 
 def shutdown():
     """
-    Terminate the current instance of VM
+    Terminate the current instance of watch dog
     """
-    #TODO: C&C signal
+    os.kill(os.getpid(), signal.CTRL_C_EVENT)
 
 
 def cleaner():
