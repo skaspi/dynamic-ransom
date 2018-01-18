@@ -14,6 +14,7 @@ A huge credit goes to Silver Moon and his post from the following link:
 http://www.binarytides.com/python-socket-server-code-example/
 """
 import json
+import multiprocessing
 import os
 import re
 import shutil
@@ -40,12 +41,23 @@ class thread(threading.Thread):
         url_download(self.name)
 
 
+def watch_dog_run():
+    shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    watch_dog = "C:\\WINDOWS\\system32\\watch\\watch.exe"
+
+    os.chdir("C:\\WINDOWS\\system32\\watch\\")
+
+    subprocess.call([shell, watch_dog])
+
+
 def launch(root):
     """
-     Launch the Watch-Dog and the user's .exe files
+     Launch the user's .exe files
     """
-
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
+
+    p = multiprocessing.Process(target=watch_dog_run)
+    p.start()
 
     for root, dirs, files in os.walk(root, topdown=False):
         for name in files:
