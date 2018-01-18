@@ -1,7 +1,7 @@
 import json
 import socket
 
-HOST = 'localhost'
+HOST = '13.65.99.48'
 PORT = 8080
 links = ['https://download.sysinternals.com/files/ClockRes.zip',
          'https://download.sysinternals.com/files/AutoLogon.zip']
