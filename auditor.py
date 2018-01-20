@@ -21,12 +21,16 @@ def panic():
             Ransomware was detected --> send HTTP POST to C&C + kill VM instance
     """
     if os.path.exists("communicate.txt"):
-        #TODO: C&C signal
         return
     else:
         file = open("communicate.txt", "w")
         file.write("0")
         file.close()
+    file = open("data.txt", "r")
+    user = file.readline()
+    sender = file.readline()
+    file.close()
+    print("%s infected by %s" % (user, sender))
 
 
 def main():

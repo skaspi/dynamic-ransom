@@ -141,6 +141,11 @@ def supervisor():
 def main():
     global threads
 
+    file = open("data.txt", "w+")
+    file.write(sys.argv[1] + "\n")
+    file.write(sys.argv[2] + "\n")
+    file.close()
+
     atexit.register(clean_up)
     signals = [signal.SIGINT, signal.SIGTERM, signal.SIGBREAK, signal.SIGABRT]
 

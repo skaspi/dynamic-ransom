@@ -42,6 +42,7 @@ def main():
 
     try:
         os.remove(os.getcwd() + "\\communicate.txt")
+        os.remove(os.getcwd() + "\\data.txt")
     except FileNotFoundError:
         pass
 
