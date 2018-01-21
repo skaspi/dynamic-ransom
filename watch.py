@@ -142,8 +142,7 @@ def main():
     global threads
 
     file = open("data.txt", "w+")
-    file.write(sys.argv[1] + "\n")
-    file.write(sys.argv[2] + "\n")
+    file.write(sys.argv[1] + "," + sys.argv[2])
     file.close()
 
     atexit.register(clean_up)

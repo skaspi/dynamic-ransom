@@ -27,10 +27,10 @@ def panic():
         file.write("0")
         file.close()
     file = open("data.txt", "r")
-    user = file.readline()
-    sender = file.readline()
+    temp = file.read()
     file.close()
-    print("%s infected by %s" % (user, sender))
+    names = temp.split(",")
+    print("the %s is infected by %s "%(names[0],names[1]))
 
 
 def main():
