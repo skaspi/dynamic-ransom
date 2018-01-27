@@ -1,9 +1,9 @@
 import json
 import socket
 
-HOST = '13.65.99.48'
+HOST = 'localhost'
 PORT = 8080
-links = ['https://download.sysinternals.com/files/ClockRes.zip',
+links = ['https://download.sysinternals.com/files/ClockRes.zip', " ",
          'https://download.sysinternals.com/files/AutoLogon.zip']
 
 out = json.dumps(links)

@@ -41,25 +41,23 @@ class thread(threading.Thread):
         url_download(self.name)
 
 
-def watch_dog_run():
+def watch_dog_run(user, sender):
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    watch_dog = "C:\\WINDOWS\\system32\\watch\\watch.exe"
+    watch_dog = "C:\\WINDOWS\\system32\\watch\\watch.exe " + user + " " + sender
 
     os.chdir("C:\\WINDOWS\\system32\\watch\\")
 
     subprocess.call([shell, watch_dog])
 
 
-def launch(root):
+def launch(root, user, sender):
     """
      Launch the user's .exe files
     """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
 
-    p = multiprocessing.Process(target=watch_dog_run)
+    p = multiprocessing.Process(target=watch_dog_run, args=(user, sender,))
     p.start()
-    
-    time.sleep(1)
 
     for root, dirs, files in os.walk(root, topdown=False):
         for name in files:
@@ -120,7 +118,7 @@ def url_download(url):
         zip_ref.testzip()
     except RuntimeError as e:
         if 'encrypted' in str(e):
-            zip_ref.extractall(path, pwd='dg')
+            zip_ref.extractall(path, pwd=b'infected')
             encrypt = 1
 
     if encrypt == 0:
@@ -143,12 +141,10 @@ def get_filename_from_cd(cd):
     return fname[0]
 
 
-def handle_links(raw_data):
+def handle_links(raw_data, user, sender):
     """
      Routine for handling the received downloadable links
     """
-    raw_data = raw_data.decode('ASCII')
-    raw_data = json.loads(raw_data)
     threads = []
 
     for i in range(len(raw_data)):
@@ -165,7 +161,7 @@ def handle_links(raw_data):
     dst = os.environ['USERPROFILE'] + "\\Desktop\\" + str(connection)
 
     shutil.move(src, dst)
-    launch(dst)
+    launch(dst, user, sender)
 
 
 def client_thread(conn):
@@ -177,8 +173,18 @@ def client_thread(conn):
 
         if not data:
             break
+        my_json = data.decode('ASCII')
+        data = json.loads(my_json)
+        if type(data) == list:
+            data = ''.join(data)
+        else:
+            data = json.loads(data)
 
-        handle_links(data)
+        body_links = (re.findall("(?P<url>https?://[^\s]+)", data))
+
+        user = "skaspi33@gmail.com"
+        sender = "bad_guy@gmail.com"
+        handle_links(body_links, user, sender)
         reply = b'OK...'
         conn.sendall(reply)
 
