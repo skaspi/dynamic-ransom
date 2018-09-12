@@ -10,18 +10,62 @@ Technion, Haifa, Israel
 Script for watch-dog audition.The watch dog screens all the
 changes(deleting,modifying etc.) made to files with specified extensions.
 Each watch-dog screens its own directory.
-In our case we monitor C:\\ drive.
-
 """
+
+import atexit
 import os
 import shutil
+import signal
 import subprocess
+import sys
 import threading
+import time
+
+exited = 0
+
+global threads
+threads = []
+
+
+def clean_up():
+    """
+        The actual treads stopping + files clean-up
+    """
+    global exited
+    global threads
+
+    if exited == 1:
+        return
+
+    sys.stdout.write('\nStopping threads...clean-up files... ')
+    sys.stdout.flush()
+
+    for worker in threads:
+        if type(worker) != threading.Timer:
+            worker.stop()
+        else:
+            worker.cancel()
+
+    cleaner()
+
+    sys.stdout.write('done\n')
+    sys.stdout.flush()
+    exited = 1
+    time.sleep(1)
+
+
+def exit_handler(sig, frame):
+    """
+        General shutdown signal handler
+    """
+    clean_up()
+    signal.signal(signal.SIGINT, signal.default_int_handler)
 
 
 class thread(threading.Thread):
     def __init__(self, threadID, name):
         threading.Thread.__init__(self)
+        self.kill_received = False
         self.threadID = threadID
         self.name = name
 
@@ -30,39 +74,99 @@ class thread(threading.Thread):
 
         if self.threadID == 1:
             supervisor()
-        else:
-            aux_supervisor()
+
+    def stop(self):
+        self.kill_received = True
 
 
-def aux_supervisor():
-    shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    arguments = "watchmedo shell-command --patterns='*.py' --recursive --command='echo hui' "
-    location = os.environ['USERPROFILE'] + "\\Desktop\\"
-    subprocess.call([shell, arguments + location])
+def shutdown():
+    """
+    Terminate the current instance of watch dog
+    """
+    os.kill(os.getpid(), signal.CTRL_C_EVENT)
+
+
+def cleaner():
+    """
+        Call the dedicated cleaner.py script
+    """
+    subprocess.Popen(["python", "cleaner.py"], shell=True, stdout=subprocess.PIPE).communicate()[0]
+
+
+def crawler():
+    """
+        Extract the names of honeypots with dedicated crawler script
+    """
+    subprocess.Popen(["python", "crawler.py"], shell=True, stdout=subprocess.PIPE).communicate()[0]
+
+
+def generate():
+    """
+        Call the dedicated generator.py script
+    """
+    subprocess.Popen(["python", "generator.py"], shell=True, stdout=subprocess.PIPE).communicate()[0]
+
+
+def distribute():
+    """
+        Distribute honeypots to specified folders
+    """
+
+    paths = [os.environ['USERPROFILE'] + "\\Documents\\",
+             os.environ['USERPROFILE'] + "\\Desktop\\"]
+
+    counter = 0
+    indicator = 0
+
+    rootdir = os.environ['USERPROFILE'] + "\\Desktop\\honey\\"
+
+    for dirName, dirlist, fileList in os.walk(rootdir):
+        for fname in fileList:
+            shutil.move(rootdir + fname, paths[indicator] + fname)
+            counter += 1
+            if counter % 8 == 0:
+                indicator += 1
 
 
 def supervisor():
+    """
+        Watch after honeypot files modification
+    """
     shell = "C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\powershell.exe"
-    arguments = "watchmedo shell-command --patterns='*.txt;*.pdf;*.xlsx' --recursive  --command='python "
-    location = os.environ['USERPROFILE'] + "\\Desktop\\" + "script.py"
+    arguments = "watchmedo shell-command --patterns='*.txt;*.xlsx;*.jpg;*.mp3;*.mp4' --recursive  --command='python "
+    location = "auditor.py"
     subprocess.call([shell, arguments + location + " ${watch_src_path}' C:\\"])
 
 
 def main():
-    print("Watch-dog is getting started ...")
+    global threads
 
-    fh = open(os.environ['USERPROFILE'] + "\\Desktop\\counter.bak", "w+")
-    shutil.copy("script.py", os.environ['USERPROFILE'] + "\\Desktop\\")
-    fh.write("0")
-    fh.close()
+    file = open("data.txt", "w+")
+    file.write(sys.argv[1] + "," + sys.argv[2])
+    file.close()
+
+    atexit.register(clean_up)
+    signals = [signal.SIGINT, signal.SIGTERM, signal.SIGBREAK, signal.SIGABRT]
+
+    for sig in signals:
+        signal.signal(sig, exit_handler)
 
     # Create new watch-dogs
     thread1 = thread(1, "watch-dog#1")
-    thread2 = thread(2, "watch-dog#2")
+    thread2 = threading.Timer(60.0, shutdown)
+
+    # Add threads to global list
+    threads.append(thread1)
+    threads.append(thread2)
+
+    print("Generating and distributing honeypot files ...")
+    generate()
+    crawler()
+    distribute()
 
     # Start new watch-dogs
-    thread1.start()
-    thread2.start()
+    for worker in threads:
+        worker.start()
 
 
 if __name__ == '__main__':
